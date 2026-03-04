@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pipeline Visualizer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Pipeline Visualizer</h1>
+            <div class="lead-time">
+                <span class="label">Deployment Lead Time:</span>
+                <span id="leadTime" class="value">0 steps</span>
+            </div>
+        </header>
+
+        <div class="toolbar">
+            <button id="addStepBtn" class="btn">+ Add Step</button>
+            <button id="importStepsBtn" class="btn btn-secondary">Import Steps</button>
+            <button id="exportStepsBtn" class="btn btn-secondary">Export Steps</button>
+            <button id="clearBtn" class="btn btn-secondary">Clear Pipeline</button>
+            <button id="validateBtn" class="btn btn-success">Validate Constraints</button>
+        </div>
+
+        <input type="file" id="importStepsInput" accept="application/json" hidden>
+
+        <div class="pipeline-container">
+            <div id="beforeZone" class="zone greyed-out">
+                <h3>Before Pipeline</h3>
+                <div class="step-list" data-zone="before"></div>
+            </div>
+
+            <div id="mainZone" class="zone main-zone">
+                <h3>Main Pipeline Flow</h3>
+                <div class="step-list" data-zone="main" id="mainPipeline"></div>
+            </div>
+
+            <div id="afterZone" class="zone greyed-out">
+                <h3>After Pipeline</h3>
+                <div class="step-list" data-zone="after"></div>
+            </div>
+        </div>
+
+        <div class="parking-lot-container">
+            <h3>🅿️ Parking Lot</h3>
+            <p class="parking-lot-hint">Drag steps here that aren't right for the current pipeline</p>
+            <div id="parkingLotZone" class="parking-lot-zone" data-zone="parking"></div>
+        </div>
+
+        <div class="validation-messages" id="validationMessages"></div>
+
+    </div>
+
+    <!-- Modal for adding custom steps -->
+    <div id="addStepModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Add Custom Step</h2>
+            <form id="addStepForm">
+                <div class="form-group">
+                    <label for="stepName">Step Name:</label>
+                    <input type="text" id="stepName" required>
+                </div>
+                <div class="form-group">
+                    <label for="stepType">Type:</label>
+                    <select id="stepType">
+                        <option value="">None</option>
+                        <option value="Delivery step">Delivery step</option>
+                        <option value="Deploy step">Deploy step</option>
+                        <option value="Package">Package</option>
+                        <option value="System test">System test</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="stepTime">Time (e.g., 5m, 2h, 1d):</label>
+                    <input type="text" id="stepTime" placeholder="Optional: 5m, 2h, 1d">
+                </div>
+                <div class="form-group">
+                    <label for="stepDescription">Description:</label>
+                    <textarea id="stepDescription" rows="3" placeholder="Optional details about this step"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="isManual">
+                        Manual step
+                    </label>
+                </div>
+                <button type="submit" class="btn" id="submitStepBtn">Add Step</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

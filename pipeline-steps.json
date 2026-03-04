@@ -1,0 +1,302 @@
+{
+  "version": 1,
+  "exportedAt": "2026-03-04T17:41:06.165Z",
+  "steps": [
+    {
+      "id": "step_1772641160271_qi9z9agjr",
+      "name": "A developer commits code",
+      "type": "Delivery step",
+      "description": "",
+      "manual": false,
+      "fixed": true,
+      "position": 0,
+      "time": ""
+    },
+    {
+      "id": "step_1772643443967_9aecq8t43",
+      "name": "Code is merged into main/trunk",
+      "type": "Delivery step",
+      "description": "All developers can now see, use, and build on this code. You cannot build the release candidate before this step is completed.",
+      "manual": false,
+      "fixed": false,
+      "position": 1,
+      "time": ""
+    },
+    {
+      "id": "step_1772641924391_yp7t4iza5",
+      "name": "Build snapshot version",
+      "type": "Package",
+      "description": "Snapshot of code in time is packaged into an identifiable version for testing purposes and not suitable for production.",
+      "manual": true,
+      "fixed": false,
+      "position": 2,
+      "time": ""
+    },
+    {
+      "id": "step_1772645598836_ldyly57u4",
+      "name": "Deploy snapshot version to production-like test environment (SYS)",
+      "type": "Deploy step",
+      "description": "Deploy to protected pre-production environment with production-like hardware, interfaces and data",
+      "manual": true,
+      "fixed": false,
+      "position": 3,
+      "time": ""
+    },
+    {
+      "id": "step_1772645673531_z87xdw6cs",
+      "name": "Continuous snapshot end to end testing",
+      "type": "System test",
+      "description": "These tests exercise business flows of the whole system, across applications, including 3rd party systems. This may be manual or automated.",
+      "manual": true,
+      "fixed": false,
+      "position": 4,
+      "time": ""
+    },
+    {
+      "id": "step_1772643900824_umckma68o",
+      "name": "Build release candidate",
+      "type": "Package",
+      "description": "Code is built and packaged into a release candidate.  This step can't be done before code is merged into main/trunk.",
+      "manual": true,
+      "fixed": false,
+      "position": 5,
+      "time": ""
+    },
+    {
+      "id": "step_1772642367492_r93h5zbsm",
+      "name": "Deploy to production-like test environment (SYS)",
+      "type": "Deploy step",
+      "description": "Deploy to protected pre-production environment with production-like hardware, interfaces and data.",
+      "manual": true,
+      "fixed": false,
+      "position": 6,
+      "time": ""
+    },
+    {
+      "id": "step_1772643098538_jfai6kshp",
+      "name": "End to end testing",
+      "type": "System test",
+      "description": "These tests exercise business flows of the whole system, across application, including 3rd party systems. This may be manual or automated.",
+      "manual": true,
+      "fixed": false,
+      "position": 7,
+      "time": ""
+    },
+    {
+      "id": "step_1772642656534_hb07dlqnn",
+      "name": "User acceptance testing",
+      "type": "System test",
+      "description": "End user representatives validate the functionality works in the way the want it to work.",
+      "manual": true,
+      "fixed": false,
+      "position": 8,
+      "time": ""
+    },
+    {
+      "id": "step_1772641255442_o9nb8tejg",
+      "name": "Go/No-Go decision",
+      "type": "",
+      "description": "Stakeholders come together to assess information and decide on deployment.",
+      "manual": true,
+      "fixed": false,
+      "position": 9,
+      "time": ""
+    },
+    {
+      "id": "step_1772641160271_4q5hde0fh",
+      "name": "Deploy to production",
+      "type": "Deploy step",
+      "description": "",
+      "manual": false,
+      "fixed": true,
+      "position": 10,
+      "time": ""
+    }
+  ],
+  "beforeSteps": [
+    {
+      "id": "step_1772642483942_k86fgun98",
+      "name": "Unit testing",
+      "type": "",
+      "description": "Tests that don't require build and deploy, written by developers, are run against implementation.",
+      "manual": false,
+      "fixed": false,
+      "position": 0,
+      "time": ""
+    }
+  ],
+  "afterSteps": [
+    {
+      "id": "step_1772645500869_j3ghiecox",
+      "name": "Testing in production",
+      "type": "System test",
+      "description": "Testing in production after production deploy. Done due to uncertainties between different environments",
+      "manual": false,
+      "fixed": false,
+      "position": 0,
+      "time": ""
+    }
+  ],
+  "parkingLot": [
+    {
+      "id": "step_1772643850187_cblsa07h2",
+      "name": "Automated performance testing",
+      "type": "System test",
+      "description": "Assess the scale of use for concurrent users, data volumes and anything with system constraints.",
+      "manual": false,
+      "fixed": false,
+      "position": 0,
+      "time": ""
+    },
+    {
+      "id": "step_1772643597546_rnjfgv6lj",
+      "name": "Usability testing",
+      "type": "System test",
+      "description": "Experts observe real users on the system to assess how they use features and if the expected benefits can be acquired.",
+      "manual": true,
+      "fixed": false,
+      "position": 1,
+      "time": ""
+    },
+    {
+      "id": "step_1772643584612_nnctr16vd",
+      "name": "3rd party integration testing",
+      "type": "",
+      "description": "Verify the system talks to 3rd party systems correctly. The 3rd party provides a test version of their system.",
+      "manual": false,
+      "fixed": false,
+      "position": 2,
+      "time": ""
+    },
+    {
+      "id": "step_1772643538676_eibi28kih",
+      "name": "Automated functional testing",
+      "type": "System test",
+      "description": "These tests execute a function of the system, checking both happy paths and error conditions. They use an API to access the functionality.",
+      "manual": false,
+      "fixed": false,
+      "position": 3,
+      "time": ""
+    },
+    {
+      "id": "step_1772643338330_hna1o387o",
+      "name": "Contract testing",
+      "type": "",
+      "description": "Verify the software will integrate correctly with 3rd party service by ensuring it fulfills the contract required by that service. The contract test should be supplied by the 3rd party and run against our software.",
+      "manual": false,
+      "fixed": false,
+      "position": 4,
+      "time": ""
+    },
+    {
+      "id": "step_1772643151704_b1q067ycm",
+      "name": "Security testing",
+      "type": "System test",
+      "description": "Skilled tester explore the system for security issues.",
+      "manual": true,
+      "fixed": false,
+      "position": 5,
+      "time": ""
+    },
+    {
+      "id": "step_1772643225350_d9xzuk4dj",
+      "name": "Static code analysis",
+      "type": "",
+      "description": "Run a tool on the source code producing information on complexity and coverage, and technical risks (security, technical debt). Compare statistics to expected baseline.",
+      "manual": false,
+      "fixed": false,
+      "position": 6,
+      "time": ""
+    },
+    {
+      "id": "step_1772643132900_k537wz56g",
+      "name": "Deployment health check",
+      "type": "System test",
+      "description": "Verify software has been deployed correctly with limited checks. Usually checks things like all services are registered and available, needed ports are open, and logs are being produced.",
+      "manual": false,
+      "fixed": false,
+      "position": 7,
+      "time": ""
+    },
+    {
+      "id": "step_1772643002545_p8fzxzffl",
+      "name": "Decide package version number",
+      "type": "",
+      "description": "When package is created, it needs a unique identifier. Internal and external identifier may be separate. Package version number may be automatically generated or manually assigned.",
+      "manual": false,
+      "fixed": false,
+      "position": 8,
+      "time": ""
+    },
+    {
+      "id": "step_1772642796658_6m7altmua",
+      "name": "AI Code review",
+      "type": "",
+      "description": "Agent creates a code review for original author to assess for actions.",
+      "manual": true,
+      "fixed": false,
+      "position": 9,
+      "time": ""
+    },
+    {
+      "id": "step_1772642721638_ra2v1a4ys",
+      "name": "Code review",
+      "type": "",
+      "description": "Second pair of eyes looks at the code.",
+      "manual": true,
+      "fixed": false,
+      "position": 10,
+      "time": ""
+    },
+    {
+      "id": "step_1772642556759_89fpmwa0t",
+      "name": "Automated user interface testing",
+      "type": "System test",
+      "description": "Tests exercise a wide variety of functionality, using the UI in the same way as actual users.",
+      "manual": false,
+      "fixed": false,
+      "position": 11,
+      "time": ""
+    },
+    {
+      "id": "step_1772642085196_cwlb5eye4",
+      "name": "Automated smoke test",
+      "type": "System test",
+      "description": "Some very basic feature is verified. Nothing more is tested.",
+      "manual": false,
+      "fixed": false,
+      "position": 12,
+      "time": ""
+    },
+    {
+      "id": "step_1772641611650_budpjjfe7",
+      "name": "Deploy on build node",
+      "type": "Deploy step",
+      "description": "The whole system is deployed on a single machine. 3rd party services are replaced by test doubles or unavailable. Databased, load balancers and queues may be replaced with in-memory alternatives.",
+      "manual": false,
+      "fixed": false,
+      "position": 13,
+      "time": ""
+    },
+    {
+      "id": "step_1772642006317_oinq0vfgq",
+      "name": "Component testing",
+      "type": "",
+      "description": "Test only one component of the system. Replace the other systems with test doubles.",
+      "manual": false,
+      "fixed": false,
+      "position": 14,
+      "time": ""
+    },
+    {
+      "id": "step_1772643119646_738s0qh0n",
+      "name": "Create release notes",
+      "type": "",
+      "description": "With release candidate we publish information about what is new in the release. The release notes may be assembled by hand or created automatically.",
+      "manual": false,
+      "fixed": false,
+      "position": 15,
+      "time": ""
+    }
+  ]
+}
