@@ -1031,6 +1031,7 @@ class PipelineUI {
             if (stepId) {
                 this.manager.updateStep(stepId, { name, type, manual, description, time });
                 this.renderPipeline();
+                this.updateLeadTime();
                 this.hideAddStepModal();
             }
         } else {
