@@ -12,7 +12,10 @@
 <body>
     <div class="container">
         <header>
-            <h1>Pipeline Visualizer</h1>
+            <div class="header-top">
+                <h1>Pipeline Visualizer</h1>
+                <input type="text" id="projectName" class="project-name-input" placeholder="Add name of your visualized project">
+            </div>
             <div class="lead-time">
                 <span class="label">Deployment Lead Time:</span>
                 <span id="leadTime" class="value">0 steps</span>
@@ -24,7 +27,6 @@
             <button id="importStepsBtn" class="btn btn-secondary">Import Steps</button>
             <button id="exportStepsBtn" class="btn btn-secondary">Export Steps</button>
             <button id="clearBtn" class="btn btn-secondary">Clear Pipeline</button>
-            <button id="validateBtn" class="btn btn-success">Validate Constraints</button>
         </div>
 
         <input type="file" id="importStepsInput" accept="application/json" hidden>

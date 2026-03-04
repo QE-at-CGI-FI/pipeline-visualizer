@@ -30,14 +30,42 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
     padding-bottom: 20px;
     border-bottom: 2px solid #e0e0e0;
+    flex-wrap: wrap;
 }
 
 h1 {
     font-family: "Bungee", "Space Grotesk", "Trebuchet MS", sans-serif;
     color: #333;
     font-size: 2em;
+}
+
+.header-top {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.project-name-input {
+    padding: 10px 15px;
+    border: 2px solid #ddd;
+    border-radius: 6px;
+    font-size: 1em;
+    font-family: "Space Grotesk", "Trebuchet MS", sans-serif;
+    transition: border-color 0.3s;
+    width: 400px;
+}
+
+.project-name-input::placeholder {
+    color: #999;
+}
+
+.project-name-input:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
 }
 
 .lead-time {
@@ -90,13 +118,7 @@ h1 {
     background: #7f8c8d;
 }
 
-.btn-success {
-    background: #27ae60;
-}
 
-.btn-success:hover {
-    background: #229954;
-}
 
 .pipeline-container {
     grid-column: 1;

@@ -2,30 +2,13 @@
 class PipelineManager {
     constructor() {
         this.storageKey = 'pipelineStepsV1';
+        this.projectNameKey = 'projectNameV1';
         this.steps = [];
         this.beforeSteps = [];
         this.afterSteps = [];
         this.parkingLot = [];
-        this.constraints = [
-            {
-                before: "Code is merged to main/trunk",
-                after: "Build release candidate"
-            },
-            {
-                before: "Build release candidate",
-                after: "Deploy to production"
-            },
-            {
-                before: "Deploy step",
-                after: "System test",
-                type: true // type-based constraint
-            },
-            {
-                before: "Package",
-                after: "Deploy step",
-                type: true
-            }
-        ];
+        this.projectName = '';
+
         if (!this.loadFromStorage()) {
             this.init();
         }
@@ -188,6 +171,12 @@ class PipelineManager {
             const afterSteps = Array.isArray(data.afterSteps) ? data.afterSteps : null;
             const parkingLot = Array.isArray(data.parkingLot) ? data.parkingLot : null;
             
+            // Load project name from storage
+            const projectName = localStorage.getItem(this.projectNameKey);
+            if (projectName) {
+                this.projectName = projectName;
+            }
+            
             return this.setStepsFromImport(steps, {
                 persist: false,
                 beforeSteps,
@@ -214,6 +203,15 @@ class PipelineManager {
         } catch (err) {
             console.warn('Failed to save steps to storage:', err);
         }
+    }
+
+    setProjectName(name) {
+        this.projectName = name;
+        localStorage.setItem(this.projectNameKey, name);
+    }
+
+    getProjectName() {
+        return this.projectName;
     }
 
     generateId() {
@@ -348,41 +346,7 @@ class PipelineManager {
         return endStep.position - startStep.position;
     }
 
-    validateConstraints() {
-        const errors = [];
 
-        this.constraints.forEach(constraint => {
-            if (constraint.type) {
-                // Type-based constraint
-                const beforeSteps = this.steps.filter(s => s.type === constraint.before);
-                const afterSteps = this.steps.filter(s => s.type === constraint.after);
-
-                beforeSteps.forEach(beforeStep => {
-                    afterSteps.forEach(afterStep => {
-                        if (beforeStep.position >= afterStep.position) {
-                            errors.push({
-                                message: `"${beforeStep.name}" (${beforeStep.type}) must come before "${afterStep.name}" (${afterStep.type})`,
-                                steps: [beforeStep.id, afterStep.id]
-                            });
-                        }
-                    });
-                });
-            } else {
-                // Name-based constraint
-                const beforeStep = this.steps.find(s => s.name === constraint.before);
-                const afterStep = this.steps.find(s => s.name === constraint.after);
-
-                if (beforeStep && afterStep && beforeStep.position >= afterStep.position) {
-                    errors.push({
-                        message: `"${constraint.before}" must come before "${constraint.after}"`,
-                        steps: [beforeStep.id, afterStep.id]
-                    });
-                }
-            }
-        });
-
-        return errors;
-    }
 
     moveToParking(stepId) {
         const sourceData = this.findStepInPipelineZones(stepId);
@@ -545,12 +509,30 @@ class PipelineUI {
     }
 
     initUI() {
+        // Restore project name from manager
+        const projectName = this.manager.getProjectName();
+        if (projectName) {
+            document.getElementById('projectName').value = projectName;
+        }
         this.renderPipeline();
         this.renderParkingLot();
         this.updateLeadTime();
     }
 
     attachEventListeners() {
+        // Project name input
+        document.getElementById('projectName').addEventListener('input', (e) => {
+            this.manager.setProjectName(e.target.value);
+        });
+
+        document.getElementById('projectName').addEventListener('change', (e) => {
+            this.manager.setProjectName(e.target.value);
+        });
+
+        document.getElementById('projectName').addEventListener('blur', (e) => {
+            this.manager.setProjectName(e.target.value);
+        });
+
         // Add step button
         document.getElementById('addStepBtn').addEventListener('click', () => {
             this.showAddStepModal();
@@ -580,10 +562,7 @@ class PipelineUI {
             e.target.value = '';
         });
 
-        // Validate button
-        document.getElementById('validateBtn').addEventListener('click', () => {
-            this.validatePipeline();
-        });
+
 
         // Modal close
         document.querySelector('.close').addEventListener('click', () => {
@@ -931,34 +910,7 @@ class PipelineUI {
         leadTimeElement.textContent = `${leadTime} step${leadTime !== 1 ? 's' : ''}`;
     }
 
-    validatePipeline() {
-        const errors = this.manager.validateConstraints();
-        const validationDiv = document.getElementById('validationMessages');
 
-        if (errors.length === 0) {
-            validationDiv.className = 'validation-messages success';
-            validationDiv.innerHTML = '<strong>✓ All constraints satisfied!</strong><p>Your pipeline is valid.</p>';
-        } else {
-            validationDiv.className = 'validation-messages error';
-            let html = '<strong>✗ Constraint Violations:</strong><ul>';
-            errors.forEach(error => {
-                html += `<li>${error.message}</li>`;
-            });
-            html += '</ul>';
-            validationDiv.innerHTML = html;
-
-            // Highlight error steps
-            document.querySelectorAll('.step-card').forEach(card => {
-                card.classList.remove('error');
-            });
-            errors.forEach(error => {
-                error.steps.forEach(stepId => {
-                    const card = document.querySelector(`[data-step-id="${stepId}"]`);
-                    if (card) card.classList.add('error');
-                });
-            });
-        }
-    }
 
     hideValidationMessages() {
         const validationDiv = document.getElementById('validationMessages');
@@ -1051,9 +1003,14 @@ class PipelineUI {
     }
 
     exportSteps() {
+        // Ensure current project name input is saved before exporting
+        const currentProjectName = document.getElementById('projectName').value;
+        this.manager.setProjectName(currentProjectName);
+
         const payload = {
             version: 1,
             exportedAt: new Date().toISOString(),
+            projectName: this.manager.getProjectName(),
             steps: this.manager.getSteps(),
             beforeSteps: this.manager.getZoneSteps('before'),
             afterSteps: this.manager.getZoneSteps('after'),
@@ -1081,10 +1038,17 @@ class PipelineUI {
                 const beforeSteps = Array.isArray(data.beforeSteps) ? data.beforeSteps : [];
                 const afterSteps = Array.isArray(data.afterSteps) ? data.afterSteps : [];
                 const parkingLot = Array.isArray(data.parkingLot) ? data.parkingLot : [];
+                const projectName = data.projectName || '';
 
                 if (!this.manager.setStepsFromImport(steps, { beforeSteps, afterSteps, parkingLot })) {
                     this.showStatusMessage('<strong>Import failed:</strong> Invalid steps file.', 'error');
                     return;
+                }
+
+                // Restore project name from imported file
+                if (projectName) {
+                    this.manager.setProjectName(projectName);
+                    document.getElementById('projectName').value = projectName;
                 }
 
                 this.renderPipeline();

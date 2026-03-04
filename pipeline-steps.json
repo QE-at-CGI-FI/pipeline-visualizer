@@ -1,6 +1,7 @@
 {
   "version": 1,
-  "exportedAt": "2026-03-04T17:41:06.165Z",
+  "exportedAt": "2026-03-04T17:57:24.490Z",
+  "projectName": "Sample project",
   "steps": [
     {
       "id": "step_1772641160271_qi9z9agjr",
@@ -34,7 +35,7 @@
     },
     {
       "id": "step_1772645598836_ldyly57u4",
-      "name": "Deploy snapshot version to production-like test environment (SYS)",
+      "name": "Deploy snapshot version to production-like test environment (INT)",
       "type": "Deploy step",
       "description": "Deploy to protected pre-production environment with production-like hardware, interfaces and data",
       "manual": true,
