@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "exportedAt": "2026-03-04T17:57:24.490Z",
+  "exportedAt": "2026-03-04T18:05:38.520Z",
   "projectName": "Sample project",
   "steps": [
     {
@@ -14,13 +14,23 @@
       "time": ""
     },
     {
+      "id": "step_1772642721638_ra2v1a4ys",
+      "name": "Code review",
+      "type": "",
+      "description": "Second pair of eyes looks at the code.",
+      "manual": true,
+      "fixed": false,
+      "position": 1,
+      "time": ""
+    },
+    {
       "id": "step_1772643443967_9aecq8t43",
       "name": "Code is merged into main/trunk",
       "type": "Delivery step",
       "description": "All developers can now see, use, and build on this code. You cannot build the release candidate before this step is completed.",
       "manual": false,
       "fixed": false,
-      "position": 1,
+      "position": 2,
       "time": ""
     },
     {
@@ -30,7 +40,7 @@
       "description": "Snapshot of code in time is packaged into an identifiable version for testing purposes and not suitable for production.",
       "manual": true,
       "fixed": false,
-      "position": 2,
+      "position": 3,
       "time": ""
     },
     {
@@ -40,7 +50,7 @@
       "description": "Deploy to protected pre-production environment with production-like hardware, interfaces and data",
       "manual": true,
       "fixed": false,
-      "position": 3,
+      "position": 4,
       "time": ""
     },
     {
@@ -50,7 +60,7 @@
       "description": "These tests exercise business flows of the whole system, across applications, including 3rd party systems. This may be manual or automated.",
       "manual": true,
       "fixed": false,
-      "position": 4,
+      "position": 5,
       "time": ""
     },
     {
@@ -60,7 +70,7 @@
       "description": "Code is built and packaged into a release candidate.  This step can't be done before code is merged into main/trunk.",
       "manual": true,
       "fixed": false,
-      "position": 5,
+      "position": 6,
       "time": ""
     },
     {
@@ -70,7 +80,7 @@
       "description": "Deploy to protected pre-production environment with production-like hardware, interfaces and data.",
       "manual": true,
       "fixed": false,
-      "position": 6,
+      "position": 7,
       "time": ""
     },
     {
@@ -80,7 +90,7 @@
       "description": "These tests exercise business flows of the whole system, across application, including 3rd party systems. This may be manual or automated.",
       "manual": true,
       "fixed": false,
-      "position": 7,
+      "position": 8,
       "time": ""
     },
     {
@@ -90,7 +100,7 @@
       "description": "End user representatives validate the functionality works in the way the want it to work.",
       "manual": true,
       "fixed": false,
-      "position": 8,
+      "position": 9,
       "time": ""
     },
     {
@@ -100,7 +110,7 @@
       "description": "Stakeholders come together to assess information and decide on deployment.",
       "manual": true,
       "fixed": false,
-      "position": 9,
+      "position": 10,
       "time": ""
     },
     {
@@ -110,7 +120,7 @@
       "description": "",
       "manual": false,
       "fixed": true,
-      "position": 10,
+      "position": 11,
       "time": ""
     }
   ],
@@ -240,23 +250,13 @@
       "time": ""
     },
     {
-      "id": "step_1772642721638_ra2v1a4ys",
-      "name": "Code review",
-      "type": "",
-      "description": "Second pair of eyes looks at the code.",
-      "manual": true,
-      "fixed": false,
-      "position": 10,
-      "time": ""
-    },
-    {
       "id": "step_1772642556759_89fpmwa0t",
       "name": "Automated user interface testing",
       "type": "System test",
       "description": "Tests exercise a wide variety of functionality, using the UI in the same way as actual users.",
       "manual": false,
       "fixed": false,
-      "position": 11,
+      "position": 10,
       "time": ""
     },
     {
@@ -266,7 +266,7 @@
       "description": "Some very basic feature is verified. Nothing more is tested.",
       "manual": false,
       "fixed": false,
-      "position": 12,
+      "position": 11,
       "time": ""
     },
     {
@@ -276,7 +276,7 @@
       "description": "The whole system is deployed on a single machine. 3rd party services are replaced by test doubles or unavailable. Databased, load balancers and queues may be replaced with in-memory alternatives.",
       "manual": false,
       "fixed": false,
-      "position": 13,
+      "position": 12,
       "time": ""
     },
     {
@@ -286,7 +286,7 @@
       "description": "Test only one component of the system. Replace the other systems with test doubles.",
       "manual": false,
       "fixed": false,
-      "position": 14,
+      "position": 13,
       "time": ""
     },
     {
@@ -296,7 +296,7 @@
       "description": "With release candidate we publish information about what is new in the release. The release notes may be assembled by hand or created automatically.",
       "manual": false,
       "fixed": false,
-      "position": 15,
+      "position": 14,
       "time": ""
     }
   ]
