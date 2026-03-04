@@ -337,13 +337,40 @@ class PipelineManager {
         return [...this.steps];
     }
 
+    parseTimeToHours(timeString) {
+        if (!timeString || typeof timeString !== 'string') return 0;
+        
+        const trimmed = timeString.trim();
+        if (!trimmed) return 0;
+        
+        // Parse as plain number (hours)
+        const value = parseFloat(trimmed);
+        if (isNaN(value) || value < 0) return 0;
+        
+        return value;
+    }
+
     calculateLeadTime() {
         const startStep = this.steps.find(s => s.name === "A developer commits code");
         const endStep = this.steps.find(s => s.name === "Deploy to production");
         
-        if (!startStep || !endStep) return 0;
+        if (!startStep || !endStep) return { steps: 0, hours: 0 };
         
-        return endStep.position - startStep.position;
+        const stepCount = endStep.position - startStep.position;
+        
+        // Calculate total time in hours from steps between start and end
+        let totalHours = 0;
+        const startPos = startStep.position;
+        const endPos = endStep.position;
+        
+        for (let i = startPos + 1; i < endPos; i++) {
+            const step = this.steps.find(s => s.position === i);
+            if (step && step.time) {
+                totalHours += this.parseTimeToHours(step.time);
+            }
+        }
+        
+        return { steps: stepCount, hours: totalHours };
     }
 
 
@@ -907,7 +934,19 @@ class PipelineUI {
     updateLeadTime() {
         const leadTime = this.manager.calculateLeadTime();
         const leadTimeElement = document.getElementById('leadTime');
-        leadTimeElement.textContent = `${leadTime} step${leadTime !== 1 ? 's' : ''}`;
+        
+        // Format step count
+        const stepText = `${leadTime.steps} step${leadTime.steps !== 1 ? 's' : ''}`;
+        
+        // Format hours
+        let hoursText = '';
+        if (leadTime.hours > 0) {
+            // Round to 2 decimal places
+            const roundedHours = Math.round(leadTime.hours * 100) / 100;
+            hoursText = ` (${roundedHours}h)`;
+        }
+        
+        leadTimeElement.textContent = stepText + hoursText;
     }
 
 
