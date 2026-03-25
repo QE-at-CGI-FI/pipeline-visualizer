@@ -9,7 +9,30 @@ class PipelineManager {
         this.parkingLot = [];
         this.projectName = '';
 
-        if (!this.loadFromStorage()) {
+        this._storageLoaded = this.loadFromStorage();
+    }
+
+    async load() {
+        if (!this._storageLoaded) {
+            await this.initFromFile();
+        }
+    }
+
+    async initFromFile() {
+        try {
+            const response = await fetch('pipeline-steps.json');
+            if (!response.ok) throw new Error('Failed to fetch pipeline-steps.json');
+            const data = await response.json();
+            const steps = Array.isArray(data) ? data : data.steps;
+            const beforeSteps = Array.isArray(data.beforeSteps) ? data.beforeSteps : null;
+            const afterSteps = Array.isArray(data.afterSteps) ? data.afterSteps : null;
+            const parkingLot = Array.isArray(data.parkingLot) ? data.parkingLot : null;
+            const projectName = typeof data.projectName === 'string' ? data.projectName : '';
+            if (projectName) this.projectName = projectName;
+            const ok = this.setStepsFromImport(steps, { persist: true, beforeSteps, afterSteps, parkingLot });
+            if (!ok) this.init();
+        } catch (err) {
+            console.warn('Failed to load pipeline-steps.json:', err);
             this.init();
         }
     }
@@ -1112,7 +1135,8 @@ class PipelineUI {
 // Initialize the application
 let pipelineManager, pipelineUI;
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
     pipelineManager = new PipelineManager();
+    await pipelineManager.load();
     pipelineUI = new PipelineUI(pipelineManager);
 });
