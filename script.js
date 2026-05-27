@@ -20,8 +20,8 @@ class PipelineManager {
 
     async initFromFile() {
         try {
-            const response = await fetch('pipeline-steps.json');
-            if (!response.ok) throw new Error('Failed to fetch pipeline-steps.json');
+            const response = await fetch('pipeline-steps-parking-lot.json');
+            if (!response.ok) throw new Error('Failed to fetch pipeline-steps-parking-lot.json');
             const data = await response.json();
             const steps = Array.isArray(data) ? data : data.steps;
             const beforeSteps = Array.isArray(data.beforeSteps) ? data.beforeSteps : null;
@@ -32,7 +32,7 @@ class PipelineManager {
             const ok = this.setStepsFromImport(steps, { persist: true, beforeSteps, afterSteps, parkingLot });
             if (!ok) this.init();
         } catch (err) {
-            console.warn('Failed to load pipeline-steps.json:', err);
+            console.warn('Failed to load pipeline-steps-parking-lot.json:', err);
             this.init();
         }
     }
